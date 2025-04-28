@@ -11,24 +11,6 @@ permissions:
   contents: write # This is required for actions/checkout and tag creation
 
 jobs:
-  SetupParameters:
-    runs-on: ubuntu-latest
-    outputs:
-      env: ${{ steps.set_params.outputs.env }}
-      filename: ${{ steps.set_params.outputs.filename }}
-      lambda_name: ${{ steps.set_params.outputs.lambda_name }}
-    steps:
-      # Setup parameters in job because you cannot directly pass variables into input.
-      - name: Set parameters
-        id: set_params
-        run: |
-          ENV=${{ env.ENV }}
-          FILENAME=${{ env.APP_NAME }}-${{ env.VERSION }}-$ENV
-          LAMBDA_NAME=${{ env.LAMBDA_NAME }}
-          echo "env=$ENV" >> $GITHUB_OUTPUT
-          echo "filename=$FILENAME" >> $GITHUB_OUTPUT
-          echo "lambda_name=$LAMBDA_NAME" >> $GITHUB_OUTPUT
-
   DeployCloudFormationTemplate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
