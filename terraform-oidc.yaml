@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to set up an OIDC provider, an IAM role for HCP Terraform, and a policy with full IAM permissions.
+
+Resources:
+  OIDCProvider:
+    Type: 'AWS::IAM::OIDCProvider'
+    Properties:
+      Url: 'https://app.terraform.io'
+      ClientIdList:
+        - 'aws.workload.identity'
+      ThumbprintList:
+        - '291124B977C99AC0400A90E3123DE4AD86F76E99'
+      Tags:
+        - Key: 'Name'
+          Value: 'HCP-Terraform-OIDC-Provider'
+
+  TerraformRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: 'HCP-Terraform-Role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Federated: !Ref OIDCProvider
+            Action: 'sts:AssumeRoleWithWebIdentity'
+            Condition:
+              StringEquals:
+                'accounts.hcp.hashicorp.com:aud': 'sts.amazonaws.com'
+      Policies:
+        - PolicyName: 'FullIAMPermissionsPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 'iam:*'
+                Resource: '*'
+      Tags:
+        - Key: 'Environment'
+          Value: 'Terraform'
+        - Key: 'Name'
+          Value: 'HCP-Terraform-Role'
+
+Outputs:
+  OIDCProviderArn:
+    Description: 'The ARN of the OIDC provider.'
+    Value: !GetAtt OIDCProvider.Arn
+
+  TerraformRoleArn:
+    Description: 'The ARN of the IAM role for HCP Terraform.'
+    Value: !GetAtt TerraformRole.Arn
