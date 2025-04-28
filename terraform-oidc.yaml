@@ -28,6 +28,8 @@ Resources:
             Condition:
               StringEquals:
                 'accounts.hcp.hashicorp.com:aud': 'sts.amazonaws.com'
+              StringLike:
+                'app.terraform.io:sub': 'organization:efgeecie:*'
       Policies:
         - PolicyName: 'FullIAMPermissionsPolicy'
           PolicyDocument:
