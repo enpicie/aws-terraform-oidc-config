@@ -30,7 +30,7 @@ jobs:
       - name: Deploy CloudFormation template
         run: |
           aws cloudformation deploy \
-            --template-file ./terraform-oidc.yaml \
+            --template-file ./terraform-oidc.yml \
             --stack-name HCP-Terraform-OIDC-Stack \
             --capabilities CAPABILITY_NAMED_IAM
 
