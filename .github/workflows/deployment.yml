@@ -5,6 +5,8 @@ on:
 
 env:
   AWS_REGION: 'us-east-2'
+  HCP_TERRAFORM_ORG: enpicie
+  HCP_TERRAFORM_WORKSPACE: hcp-tf-aws-lambda-apigw-role
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -31,3 +33,19 @@ jobs:
             --template-file ./terraform-oidc.yaml \
             --stack-name HCP-Terraform-OIDC-Stack \
             --capabilities CAPABILITY_NAMED_IAM
+
+  ApplyRoleToHCPTerraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform and Deploy via HCP Terraform
+        uses: chzylee/action-workflow-hcp-terraform@v1.0.2
+        with:
+          tfcode_path: ./terraform # Action run from context of the repository root
+          tfc_hostname: app.terraform.io # HCP Terraform Cloud URL
+          tfc_organization: ${{ env.HCP_TERRAFORM_ORG }}
+          tfc_workspace: ${{ env.HCP_TERRAFORM_WORKSPACE }}
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
