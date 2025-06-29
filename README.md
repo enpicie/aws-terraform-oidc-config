@@ -1,12 +1,16 @@
 # aws-terraform-oidc-config
 
-CloudFormation template for OIDC provider and IAM Role for HCP Terraform runs to provision further roles assumable via OIDC.
+CloudFormation template for OIDC provider and IAM Role for HCP Terraform runs to provision further IAM roles assumable via OIDC.
+
+This role is intended to be consumed by other Terraform configs that provision IAM resources for specific sets of permissions for different use cases. For example, a separate config will provision a role to allow Terraform to manage Lambda and API Gateway resources, and it will consume the role deployed via this repo to do so.
 
 ## Usage
 
-This repo has a GitHub Actions pipeline that will deploy the CloudFormation template to AWS. The created IAM Role's ARN can be used with Terraform to configure IAM Roles with different permissions needed for different projects' needs.
+Add the HCP Terraform Workspace name to `workspace_names` list in [workspaces.tfvars](./terraform/workspaces.tfvars) and push to trigger the GitHub Actions pipeline.
 
-GitHub Actions will receive create permissions via IAM Role manually created in AWS Console associated with the GitHub Actions OIDC provider. That is the only manual step needed to automate deployment of further roles and permissions.
+The GitHub Actions pipeline will deploy [the CloudFormation template](./terraform-oidc.yml) to AWS. The created IAM Role's ARN is used in [the Terraform config](./terraform/main.tf) to add this role to an HCP Terraform variable set with variables named for HCP Terraform to use the role to authenticate to AWS for IAM provisioning.
+
+The Role ARN is _NOT_ considered sensitive information, so it is safe to commit in this code and should not need to be changed.
 
 ## OIDC Provider Thumbprint
 
