@@ -1,5 +1,7 @@
 # No token needed. Authenticating to HCP Terraform via repo secret withh TF_API_TOKEN.
-provider "tfe" {}
+provider "tfe" {
+  hostname = "app.terraform.io"
+}
 
 resource "tfe_variable_set" "oidc_role_variable_set" {
   name         = "OIDC Execution Role ARN"
