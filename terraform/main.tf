@@ -3,10 +3,14 @@ provider "tfe" {
   hostname = "app.terraform.io"
 }
 
+data "tfe_organization" "hcp_organization" {
+  name = var.tfe_organization
+}
+
 resource "tfe_variable_set" "oidc_role_variable_set" {
   name         = "OIDC Execution Role ARN"
   description  = "TFC variable set with the role ARN used by OIDC with permissions to provision IAM resources."
-  organization = var.tfe_organization
+  organization = data.tfe_organization.hcp_organization.id
   global       = false
 }
 
