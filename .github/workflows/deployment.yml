@@ -7,6 +7,8 @@ env:
   AWS_REGION: 'us-east-2'
   HCP_TERRAFORM_ORG: enpicie
   HCP_TERRAFORM_WORKSPACE: aws-terraform-oidc-config
+  HCP_TERRAFORM_PROJECT_ID: prj-pAh9kkvyHMNEjs4z
+  # ID of project AWS-Infrastructure
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -46,5 +48,6 @@ jobs:
         with:
           terraform_directory: ./terraform # Action run from context of the repository root
           tfc_organization: ${{ env.HCP_TERRAFORM_ORG }}
+          tfc_project_id: ${{ env.HCP_TERRAFORM_PROJECT_ID }}
           tfc_workspace: ${{ env.HCP_TERRAFORM_WORKSPACE }}
           tfc_token: ${{ secrets.TF_API_TOKEN }}
