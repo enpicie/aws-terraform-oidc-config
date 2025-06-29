@@ -6,7 +6,7 @@ on:
 env:
   AWS_REGION: 'us-east-2'
   HCP_TERRAFORM_ORG: enpicie
-  HCP_TERRAFORM_WORKSPACE: hcp-tf-aws-lambda-apigw-role
+  HCP_TERRAFORM_WORKSPACE: aws-terraform-oidc-config
 
 permissions:
   id-token: write # This is required for requesting the JWT
