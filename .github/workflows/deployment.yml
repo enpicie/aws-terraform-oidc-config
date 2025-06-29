@@ -41,6 +41,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check directory
+        shell: bash
+        run: ls
+
       - name: Setup Terraform and Deploy via HCP Terraform
         uses: chzylee/action-workflow-hcp-terraform@v1.0.7
         with:
