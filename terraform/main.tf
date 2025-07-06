@@ -9,7 +9,7 @@ data "tfe_organization" "hcp_organization" {
 
 data "tfe_variable_set" "oidc_role_variable_set" {
   name         = "varset-jKixqmCxFbehcHqo"
-  organization = data.tfe_organization.hcp_organization.name
+  organization = "org-8qPNhQjxHH64Xqhf"
 }
 
 resource "tfe_variable" "role_arn_var" {
