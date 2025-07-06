@@ -18,7 +18,7 @@ resource "tfe_variable" "role_arn_var" {
   # THIS SHOULD NEVER NEED TO BE CHANGED.
   value           = "arn:aws:iam::637423387388:role/HCP-Terraform-Role"
   category        = "env"
-  variable_set_id = tfe_variable_set.oidc_role_variable_set.id
+  variable_set_id = data.tfe_variable_set.oidc_role_variable_set.id
 }
 
 # Attach to multiple workspaces by name
@@ -31,5 +31,5 @@ data "tfe_workspace" "targets" {
 resource "tfe_workspace_variable_set" "attachment" {
   for_each        = data.tfe_workspace.targets
   workspace_id    = each.value.id
-  variable_set_id = tfe_variable_set.oidc_role_variable_set.id
+  variable_set_id = data.tfe_variable_set.oidc_role_variable_set.id
 }
