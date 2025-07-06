@@ -8,7 +8,7 @@ data "tfe_organization" "hcp_organization" {
 }
 
 data "tfe_variable_set" "oidc_role_variable_set" {
-  name         = "Test Var Set"
+  name         = "varset-jKixqmCxFbehcHqo"
   organization = data.tfe_organization.hcp_organization.name
 }
 
