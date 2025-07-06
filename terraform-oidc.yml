@@ -27,7 +27,7 @@ Resources:
             Action: 'sts:AssumeRoleWithWebIdentity'
             Condition:
               StringEquals:
-                'accounts.hcp.hashicorp.com:aud': 'sts.amazonaws.com'
+                'app.terraform.io:aud': 'aws.workload.identity'
               StringLike:
                 'app.terraform.io:sub': 'organization:enpicie:*'
       Policies:
