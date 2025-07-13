@@ -1,8 +1,3 @@
-# No token needed. Authenticating to HCP Terraform via repo secret withh TF_API_TOKEN.
-provider "tfe" {
-  hostname = "app.terraform.io"
-}
-
 data "tfe_organization" "hcp_organization" {
   name = var.tfe_organization
 }
