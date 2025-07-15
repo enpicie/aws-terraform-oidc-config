@@ -39,6 +39,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Setup HCP Terraform Workspace
+        uses: chzylee/action-workflow-hcp-terraform-workspace-setup@v0.1.0
+        with:
+          tfc_organization: ${{ env.HCP_TERRAFORM_ORG }}
+          tfc_workspace: ${{ env.HCP_TERRAFORM_WORKSPACE }}
+          tfc_project: ${{{ env.HCP_TERRAFORM_PROJECT_ID }}}
+          tfc_token: ${{ secrets.TF_API_TOKEN }}
+
       - name: Setup Terraform and Deploy via HCP Terraform
         uses: chzylee/action-workflow-hcp-terraform-run@v1.1.1
         with:
