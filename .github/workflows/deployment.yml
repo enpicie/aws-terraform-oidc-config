@@ -7,8 +7,7 @@ env:
   AWS_REGION: 'us-east-2'
   HCP_TERRAFORM_ORG: enpicie
   HCP_TERRAFORM_WORKSPACE: aws-terraform-oidc-config
-  HCP_TERRAFORM_PROJECT_ID: prj-pAh9kkvyHMNEjs4z
-  # ID of project AWS-Infrastructure
+  HCP_TERRAFORM_PROJECT_ID: prj-pAh9kkvyHMNEjs4z # ID of project AWS-Infrastructure
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -44,7 +43,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Terraform and Deploy via HCP Terraform
-        uses: chzylee/action-workflow-hcp-terraform@v1.1.1
+        uses: chzylee/action-workflow-hcp-terraform@v1.1.0
         with:
           terraform_directory: ./terraform # Action run from context of the repository root
           tfc_organization: ${{ env.HCP_TERRAFORM_ORG }}
