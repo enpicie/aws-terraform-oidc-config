@@ -39,9 +39,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Setup Terraform and Deploy via HCP Terraform
         uses: chzylee/action-workflow-hcp-terraform-run@v1.1.1
         with:
