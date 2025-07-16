@@ -4,6 +4,12 @@ CloudFormation template for OIDC provider and IAM Role for HCP Terraform runs to
 
 This role is intended to be consumed by other Terraform configs that provision IAM resources for specific sets of permissions for different use cases. For example, a separate config will provision a role to allow Terraform to manage Lambda and API Gateway resources, and it will consume the role deployed via this repo to do so.
 
+## Deployments
+
+- "HCP-Terraform-Role" and OIDC Provider "HCP-Terraform-OIDC-Provider" to AWS
+- "OIDC Execution Role - IAM Perms" variable set to HCP Terraform
+  - Contains reference to the HCP-Terraform-Role role for other Workspaces to consume to provision IAM resources.
+
 ## Usage
 
 Add the HCP Terraform Workspace name to `workspace_names` list in [workspaces.tfvars](./terraform/workspaces.tfvars) and push to trigger the GitHub Actions pipeline.
