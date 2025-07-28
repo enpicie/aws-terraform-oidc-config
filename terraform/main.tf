@@ -9,19 +9,19 @@ resource "tfe_variable_set" "oidc_role_variable_set" {
   global       = false
 }
 
+resource "tfe_variable" "tfc_aws_provider_auth" {
+  key             = "TFC_AWS_PROVIDER_AUTH"
+  value           = "true"
+  category        = "env"
+  variable_set_id = tfe_variable_set.oidc_role_variable_set.id
+}
+
 resource "tfe_variable" "role_arn_var" {
   key = "TFC_AWS_RUN_ROLE_ARN"
   # ARN of role created by the CloudFormation template in terraform-oidc.yml
   # THIS SHOULD NEVER NEED TO BE CHANGED.
   # This is safe to commit as access is restricted to only allow "enpicie" HCP org.
   value           = "arn:aws:iam::637423387388:role/HCP-Terraform-Role"
-  category        = "env"
-  variable_set_id = tfe_variable_set.oidc_role_variable_set.id
-}
-
-resource "tfe_variable" "tfc_aws_provider_auth" {
-  key             = "TFC_AWS_PROVIDER_AUTH"
-  value           = "true"
   category        = "env"
   variable_set_id = tfe_variable_set.oidc_role_variable_set.id
 }
