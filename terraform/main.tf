@@ -21,7 +21,7 @@ resource "tfe_variable" "role_arn_var" {
   # ARN of role created by the CloudFormation template in terraform-oidc.yml
   # THIS SHOULD NEVER NEED TO BE CHANGED.
   # This is safe to commit as access is restricted to only allow "enpicie" HCP org.
-  value           = "arn:aws:iam::637423387388:role/HCP-Terraform-Role"
+  value           = "arn:aws:iam::637423387388:role/HCP-Terraform-IAM-Provisioner-Role"
   category        = "env"
   variable_set_id = tfe_variable_set.oidc_role_variable_set.id
 }
