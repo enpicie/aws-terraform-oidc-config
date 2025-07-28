@@ -19,6 +19,13 @@ resource "tfe_variable" "role_arn_var" {
   variable_set_id = tfe_variable_set.oidc_role_variable_set.id
 }
 
+resource "tfe_variable" "tfc_aws_provider_auth" {
+  key             = "TFC_AWS_PROVIDER_AUTH"
+  value           = "true"
+  category        = "env"
+  variable_set_id = tfe_variable_set.oidc_role_variable_set.id
+}
+
 # Attach to multiple workspaces by name
 data "tfe_workspace" "targets" {
   for_each     = toset(var.workspace_names)
