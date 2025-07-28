@@ -6,6 +6,7 @@ on:
       - '**.tf'
       - '**.tfvars'
       - 'terraform/**'
+      - '.github/workflows/deployment.yml' # This workflow file
       - 'terraform-oidc.yml' # CloudFormation template
 
 env:
