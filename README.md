@@ -4,19 +4,21 @@ CloudFormation template for OIDC provider and IAM Role for HCP Terraform runs to
 
 This role is intended to be consumed by other Terraform configs that provision IAM resources for specific sets of permissions for different use cases. For example, a separate config will provision a role to allow Terraform to manage Lambda and API Gateway resources, and it will consume the role deployed via this repo to do so.
 
-## Deployments
-
-- "HCP-Terraform-Role" and OIDC Provider "HCP-Terraform-OIDC-Provider" to AWS
-- "OIDC Execution Role - IAM Perms" variable set to HCP Terraform
-  - Contains reference to the HCP-Terraform-Role role for other Workspaces to consume to provision IAM resources.
-
 ## Usage
 
-Add the HCP Terraform Workspace name to `workspace_names` list in [workspaces.tfvars](./terraform/workspaces.tfvars) and push to trigger the GitHub Actions pipeline.
+Call [action-workflow-hcp-terraform-var-set-attach](https://github.com/enpicie/action-workflow-hcp-terraform-var-set-attach) like this:
 
-The GitHub Actions pipeline will deploy [the CloudFormation template](./terraform-oidc.yml) to AWS. The created IAM Role's ARN is used in [the Terraform config](./terraform/main.tf) to add this role to an HCP Terraform variable set with variables named for HCP Terraform to use the role to authenticate to AWS for IAM provisioning.
+```yaml
+- name: Attach IAM Permissions Variable Set to this Workspace
+  uses: chzylee/action-workflow-hcp-terraform-var-set-attach@v1.0.0
+  with:
+    tfc_organization: ${{ env.HCP_TERRAFORM_ORG }}
+    tfc_workspace_id: ${{ steps.setup_workspace.outputs.workspace_id }}
+    tfc_token: ${{ secrets.TF_API_TOKEN }}
+    var_set_name: ${{ vars.AWS_TF_ROLE_VARSET_IAM}}
+```
 
-The Role ARN is _NOT_ considered sensitive information, so it is safe to commit in this code and should not need to be changed.
+This attaches the HCP Terraform Variable set referencing the permissions provisioned by this config to a workspace to allow Terraform to assume the role with these permissions.
 
 ## OIDC Provider Thumbprint
 
